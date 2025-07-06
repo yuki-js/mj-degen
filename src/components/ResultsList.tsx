@@ -4,6 +4,7 @@ import { useQueryParam } from "../hooks/useQueryParam";
 import { useShrinkMap } from "../hooks/useShrinkMap";
 import { performSearch } from "../utils/searchUtils";
 
+import MjGlyphImage from "./MjGlyphImage";
 const ResultsList: React.FC = () => {
   const [searchTerm] = useQueryParam("q");
   const [selectedIndex, setSelectedIndex] = useQueryParam("idx");
@@ -51,11 +52,7 @@ const ResultsList: React.FC = () => {
           <strong>MJ文字図形名:</strong> {result.mjId}
         </p>
       </div>
-      <img
-        src={`https://moji.or.jp/mojikibansearch/img/MJ/${result.mjId}.png`}
-        alt={result.mjId}
-        className="glyph-image"
-      />
+      <MjGlyphImage mjId={result.mjId} size="small" />
     </div>
   );
 

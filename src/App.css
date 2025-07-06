@@ -1,7 +1,16 @@
+@font-face {
+  font-family: "IPAMJMincho";
+  src: url("/ipamjm.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* General Body & Typography */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f8f9fa; /* Lighter, cleaner background */
@@ -16,6 +25,34 @@ body {
   min-height: 100vh;
 }
 
+/* Tab Navigation */
+.tab-nav {
+  display: flex;
+  border-bottom: 2px solid #dee2e6;
+  margin-bottom: 1.5rem;
+}
+
+.tab-nav a {
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  color: #495057;
+  font-weight: 500;
+  border: 2px solid transparent;
+  border-bottom: none;
+  margin-bottom: -2px;
+  transition: all 0.2s ease-in-out;
+}
+
+.tab-nav a:hover {
+  background-color: #e9ecef;
+}
+
+.tab-nav a.active {
+  color: #5a67d8;
+  border-color: #dee2e6 #dee2e6 #ffffff;
+  border-radius: 6px 6px 0 0;
+}
+
 /* Header */
 .App-header {
   width: 100%;
@@ -28,16 +65,60 @@ body {
 }
 
 .App-header h1 {
-    margin: 0 0 1rem 0;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #343a40; /* Darker, more serious title color */
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #343a40; /* Darker, more serious title color */
 }
 
 /* Search Controls */
 .search-container {
   display: flex;
   align-items: center;
+  margin: 1.5rem 0 1.5rem 0;
+  gap: 0.5rem;
+}
+
+.search-container input {
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  width: 280px;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.search-container input:focus {
+  border-color: #5a67d8;
+  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
+  outline: none;
+}
+
+.search-container button {
+  font-size: 1.1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #5a67d8;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-container button:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.search-container button:hover:not(:disabled) {
+  background-color: #434190;
+  cursor: not-allowed;
+}
+
+.search-container button:hover:not(:disabled) {
+  background-color: #434190;
 }
 
 .search-container input {
@@ -47,13 +128,15 @@ body {
   width: 280px;
   border-radius: 6px;
   border: 1px solid #ced4da;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .search-container input:focus {
-    border-color: #5a67d8; /* Modern indigo accent */
-    box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
-    outline: none;
+  border-color: #5a67d8; /* Modern indigo accent */
+  box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
+  outline: none;
 }
 
 .search-container button {
@@ -85,6 +168,56 @@ body {
   flex-grow: 1;
 }
 
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+  gap: 1rem;
+}
+
+.pagination-controls button {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.pagination-controls button:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+  color: #6c757d;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #f1f3f5;
+}
+
+.pagination-controls.interactive {
+  cursor: grab;
+}
+
+.pagination-controls.interactive:active {
+  cursor: grabbing;
+}
+
+.page-display {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #495057;
+  user-select: none; /* ドラッグ中にテキストが選択されるのを防ぐ */
+}
+
+.page-display span {
+  display: inline-block;
+  min-width: 30px; /* 数字が変動してもレイアウトが崩れないように */
+  text-align: center;
+}
+
 /* Results List */
 .results-container {
   flex: 1;
@@ -113,13 +246,16 @@ body {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .result-item:hover {
   transform: translateY(-2px);
   border-color: #5a67d8;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .result-item.selected {
@@ -150,9 +286,19 @@ body {
   flex: 1.5;
   padding: 1.5rem;
   box-sizing: border-box;
-  background-color: #ffffff;
-  border-left: 1px solid #dee2e6;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow:
+    0 8px 32px rgba(60, 60, 90, 0.18),
+    0 1.5px 6px rgba(0, 0, 0, 0.08);
+  margin: 2rem 2rem 2rem 0;
+  border: none;
+  position: relative;
+  z-index: 10;
   text-align: left;
+  min-width: 480px;
+  max-width: 720px;
+  transition: box-shadow 0.2s;
 }
 
 .details-panel h2 {
@@ -237,5 +383,7 @@ body {
   white-space: nowrap;
   z-index: 10;
   font-size: 3em; /* Larger size */
-  font-family: "游明朝", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "MS PMincho", serif; /* Mincho font stack */
+  font-family:
+    "游明朝", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN",
+    "HG明朝E", "ＭＳ Ｐ明朝", "MS PMincho", serif; /* Mincho font stack */
 }

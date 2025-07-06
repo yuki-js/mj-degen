@@ -1,12 +1,13 @@
 import { useQueryParam } from "../hooks/useQueryParam";
 import { useShrinkMap } from "../hooks/useShrinkMap";
 import React from "react";
+import MjGlyphImage from "./MjGlyphImage";
 import InfoSection from "./InfoSection";
 import RelatedInfoSection from "./RelatedInfoSection";
 
 const DetailsPanel: React.FC = () => {
   const [selectedIndex] = useQueryParam("idx");
-  
+
   const shrinkMap = useShrinkMap();
 
   if (!selectedIndex) {
@@ -25,11 +26,7 @@ const DetailsPanel: React.FC = () => {
   return (
     <div className="details-panel">
       <h2>詳細</h2>
-      <img
-        src={`https://moji.or.jp/mojikibansearch/img/MJ/${selectedResult.MJ文字図形名}.png`}
-        alt={selectedResult.MJ文字図形名}
-        className="glyph-image-large"
-      />
+      <MjGlyphImage mjId={selectedResult.MJ文字図形名} size="large" />
       <p>
         <strong>MJ文字図形名:</strong> {selectedResult.MJ文字図形名}
       </p>
