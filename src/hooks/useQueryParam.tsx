@@ -1,19 +1,39 @@
-import { useContext } from "react";
-import { QueryParamContext } from "../context/QueryParamContext";
+import { useSearch, useNavigate } from "@tanstack/react-router";
+import { useCallback } from "react";
 
+/**
+ * useQueryParam (dynamic, robust version)
+ * - Returns the current value of the query param (from the router's location).
+ * - Returns a stable setter that updates the query param only when called.
+ * - The value is only updated when the setter is called.
+ */
 export const useQueryParam = (
   key: string
-): [string | null, (value: string | null) => void] => {
-  const context = useContext(QueryParamContext);
-  if (context === undefined) {
-    throw new Error("useQueryParam must be used within a QueryParamProvider");
-  }
+): [
+  string | null,
+  (value: string | null, options?: { replace?: boolean }) => void,
+] => {
+  const search = useSearch({ strict: false });
+  const navigate = useNavigate();
 
-  const paramValue = new URLSearchParams(window.location.search).get(key);
+  const paramValue = search[key] ?? null;
 
-  const setParam = (value: string | null) => {
-    context.setQueryParam(key, value);
-  };
+  // Stable setter that updates the query param, merging with current search object
+  const setParam = useCallback(
+    (value: string | null, options?: { replace?: boolean }) => {
+      const newSearch = { ...search };
+      if (value === null) {
+        delete newSearch[key];
+      } else {
+        newSearch[key] = value;
+      }
+      navigate({
+        search: newSearch as any, // Accept dynamic keys
+        replace: options?.replace ?? false,
+      });
+    },
+    [navigate, key, search]
+  );
 
   return [paramValue, setParam];
 };

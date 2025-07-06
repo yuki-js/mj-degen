@@ -1,24 +1,15 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { SearchResult } from "../types";
 import { useQueryParam } from "../hooks/useQueryParam";
 import { useShrinkMap } from "../hooks/useShrinkMap";
 import { performSearch } from "../utils/searchUtils";
 
-interface ResultsListProps {
-  setExactMatches: (matches: SearchResult[]) => void;
-  setCandidates: (candidates: SearchResult[]) => void;
-  exactMatches: SearchResult[];
-  candidates: SearchResult[];
-}
-
-const ResultsList: React.FC<ResultsListProps> = ({
-  setExactMatches,
-  setCandidates,
-  exactMatches,
-  candidates,
-}) => {
+const ResultsList: React.FC = () => {
   const [searchTerm] = useQueryParam("q");
   const [selectedIndex, setSelectedIndex] = useQueryParam("idx");
+
+  const [exactMatches, setExactMatches] = useState<SearchResult[]>([]);
+  const [candidates, setCandidates] = useState<SearchResult[]>([]);
   const shrinkMap = useShrinkMap();
 
   useEffect(() => {

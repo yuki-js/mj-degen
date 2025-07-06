@@ -1,13 +1,13 @@
-import React, { Suspense } from "react";
-import Header from "./components/Header";
-import ResultsList from "./components/ResultsList";
-import DetailsPanel from "./components/DetailsPanel";
-import Footer from "./components/Footer";
+import React, { Suspense, useState } from "react";
+import Header from "../components/Header";
+import ResultsList from "../components/ResultsList";
+import DetailsPanel from "../components/DetailsPanel";
+import Footer from "../components/Footer";
+import "../App.css";
+import { useQueryParam } from "../hooks/useQueryParam";
+import { SearchResult } from "../types";
+import { createFileRoute } from "@tanstack/react-router";
 
-import "./App.css";
-import { useQueryParam } from "./hooks/useQueryParam";
-import { useState } from "react";
-import { SearchResult } from "./types";
 // Simple Error Boundary Component
 class ErrorBoundary extends React.Component<
   React.PropsWithChildren<object>,
@@ -43,19 +43,12 @@ class ErrorBoundary extends React.Component<
 
 function AppContent() {
   const [selectedIndex] = useQueryParam("idx");
-  const [exactMatches, setExactMatches] = useState<SearchResult[]>([]);
-  const [candidates, setCandidates] = useState<SearchResult[]>([]);
 
   return (
     <div className="App">
       <Header />
       <main className="main-content">
-        <ResultsList
-          setExactMatches={setExactMatches}
-          setCandidates={setCandidates}
-          exactMatches={exactMatches}
-          candidates={candidates}
-        />
+        <ResultsList />
         {selectedIndex && <DetailsPanel />}
       </main>
       <Footer />
@@ -63,7 +56,11 @@ function AppContent() {
   );
 }
 
-function App() {
+export const Route = createFileRoute("/")({
+  component: IndexRoute,
+});
+
+export default function IndexRoute() {
   return (
     <ErrorBoundary>
       <Suspense fallback={<div>データを読み込んでいます...</div>}>
@@ -72,5 +69,3 @@ function App() {
     </ErrorBoundary>
   );
 }
-
-export default App;
