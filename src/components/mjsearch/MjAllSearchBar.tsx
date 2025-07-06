@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import "../styles/SqlQueryModal.css";
-import SqlQueryModal from "./SqlQueryModal";
+import "../../styles/SqlQueryModal.css";
+import { SqlQueryModal } from "../common/SqlQueryModal";
 import { useNavigate } from "@tanstack/react-router";
-import { MjAllDataRow } from "../types/MjAllData";
-import { MjAllSearchParams } from "../utils/mjAllSearchUtils";
+import { MjAllDataRow } from "../../types/MjAllData";
+import { MjAllSearchParams } from "../../utils/mjAllSearchUtils";
 import {
   getUniqueRadicals,
   getUniqueStrokeCounts,
-} from "../utils/mjAllSearchUtils";
-import BaseSearchInput from "./common/BaseSearchInput";
+} from "../../utils/mjAllSearchUtils";
+import { BaseSearchInput } from "../common/BaseSearchInput";
 
 // Internal FilterSelect component
 interface FilterSelectProps {
@@ -53,7 +53,7 @@ interface MjAllSearchBarProps {
  * Comprehensive search bar component for the MJ_all.csv search page
  * Includes both basic search and advanced filters
  */
-const MjAllSearchBar: React.FC<MjAllSearchBarProps> = ({
+export const MjAllSearchBar: React.FC<MjAllSearchBarProps> = ({
   data,
   initialParams,
   onSearch,
@@ -227,5 +227,3 @@ const MjAllSearchBar: React.FC<MjAllSearchBarProps> = ({
     </div>
   );
 };
-
-export default MjAllSearchBar;

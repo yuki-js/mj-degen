@@ -6,7 +6,7 @@ interface BaseSearchInputProps {
   placeholder?: string;
 }
 
-const BaseSearchInput: React.FC<BaseSearchInputProps> = ({
+export const BaseSearchInput: React.FC<BaseSearchInputProps> = ({
   onSearch,
   defaultValue = "",
   placeholder,
@@ -32,5 +32,3 @@ const BaseSearchInput: React.FC<BaseSearchInputProps> = ({
     </form>
   );
 };
-
-export default BaseSearchInput;

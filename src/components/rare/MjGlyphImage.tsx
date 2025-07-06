@@ -1,6 +1,6 @@
 import React from "react";
-import { useMjGlyphIVSMap } from "../hooks/useMjGlyphIVSMap";
-import { mjGlyphNameToIVS } from "../utils/mjGlyphNameToIVS";
+import { useMjGlyphIVSMap } from "../../hooks/useMjGlyphIVSMap";
+import { mjGlyphNameToIVS } from "../../utils/mjGlyphNameToIVS";
 
 type MjGlyphImageProps = {
   mjId: string;
@@ -37,5 +37,3 @@ export const MjGlyphImage: React.FC<MjGlyphImageProps> = ({
     </span>
   );
 };
-
-export default MjGlyphImage;

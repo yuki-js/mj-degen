@@ -1,10 +1,10 @@
 import React from "react";
-import { useQueryParam } from "../hooks/useQueryParam";
-import { useMjAllData } from "../hooks/useMjAllData";
-import MjGlyphImage from "./MjGlyphImage";
-import InfoSection from "./InfoSection";
+import { useQueryParam } from "../../hooks/useQueryParam";
+import { useMjAllData } from "../../hooks/useMjAllData";
+import { MjGlyphImage } from "../rare/MjGlyphImage";
+import { InfoSection } from "../common/InfoSection";
 
-const MjAllDetailsPanel: React.FC = () => {
+export const MjAllDetailsPanel: React.FC = () => {
   const [selectedId] = useQueryParam("idx");
   const mjAllData = useMjAllData();
 
@@ -99,5 +99,3 @@ const MjAllDetailsPanel: React.FC = () => {
     </div>
   );
 };
-
-export default MjAllDetailsPanel;

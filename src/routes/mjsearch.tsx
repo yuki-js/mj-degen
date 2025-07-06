@@ -3,9 +3,9 @@ import { createFileRoute, useSearch } from "@tanstack/react-router";
 import { useMjAllData } from "../hooks/useMjAllData";
 import { MjAllSearchParams, searchMjAllData } from "../utils/mjAllSearchUtils";
 import { MjAllSearchResult } from "../types/MjAllData";
-import MjAllSearchBar from "../components/MjAllSearchBar";
-import MjAllResultsList from "../components/MjAllResultsList";
-import MjAllDetailsPanel from "../components/MjAllDetailsPanel";
+import { MjAllSearchBar } from "../components/mjsearch/MjAllSearchBar";
+import { MjAllResultsList } from "../components/mjsearch/MjAllResultsList";
+import { MjAllDetailsPanel } from "../components/mjsearch/MjAllDetailsPanel";
 import { useQueryParam } from "../hooks/useQueryParam";
 import "../styles/MjAllSearch.css";
 

@@ -1,6 +1,6 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Header } from "../components/root/Header";
+import { Footer } from "../components/root/Footer";
 import React, { Suspense } from "react";
 
 // Simple Error Boundary Component

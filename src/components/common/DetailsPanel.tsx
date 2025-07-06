@@ -1,11 +1,11 @@
-import { useQueryParam } from "../hooks/useQueryParam";
-import { useShrinkMap } from "../hooks/useShrinkMap";
+import { useQueryParam } from "../../hooks/useQueryParam";
+import { useShrinkMap } from "../../hooks/useShrinkMap";
 import React from "react";
-import MjGlyphImage from "./MjGlyphImage";
-import InfoSection from "./InfoSection";
-import RelatedInfoSection from "./RelatedInfoSection";
+import { MjGlyphImage } from "../rare/MjGlyphImage";
+import { InfoSection } from "./InfoSection";
+import { RelatedInfoSection } from "./RelatedInfoSection";
 
-const DetailsPanel: React.FC = () => {
+export const DetailsPanel: React.FC = () => {
   const [selectedIndex] = useQueryParam("idx");
 
   const shrinkMap = useShrinkMap();
@@ -71,5 +71,3 @@ const DetailsPanel: React.FC = () => {
     </div>
   );
 };
-
-export default DetailsPanel;

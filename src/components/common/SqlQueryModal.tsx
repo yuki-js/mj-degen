@@ -6,7 +6,7 @@ interface SqlQueryModalProps {
   onSubmit: (query: string) => void;
 }
 
-const SqlQueryModal: React.FC<SqlQueryModalProps> = ({
+export const SqlQueryModal: React.FC<SqlQueryModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
@@ -300,5 +300,3 @@ const SqlQueryModal: React.FC<SqlQueryModalProps> = ({
     </div>
   );
 };
-
-export default SqlQueryModal;

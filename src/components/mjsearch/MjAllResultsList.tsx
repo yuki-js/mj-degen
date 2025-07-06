@@ -1,7 +1,7 @@
 import React from "react";
-import { MjAllSearchResult } from "../types/MjAllData";
-import MjGlyphImage from "./MjGlyphImage";
-import Pagination from "./Pagination";
+import { MjAllSearchResult } from "../../types/MjAllData";
+import { MjGlyphImage } from "../rare/MjGlyphImage";
+import { Pagination } from "../common/Pagination";
 
 interface MjAllResultsListProps {
   results: MjAllSearchResult[];
@@ -15,7 +15,7 @@ interface MjAllResultsListProps {
 /**
  * Results list component for the MJ_all.csv search page
  */
-const MjAllResultsList: React.FC<MjAllResultsListProps> = ({
+export const MjAllResultsList: React.FC<MjAllResultsListProps> = ({
   results,
   selectedId,
   onSelectResult,
@@ -84,5 +84,3 @@ const MjAllResultsList: React.FC<MjAllResultsListProps> = ({
     </div>
   );
 };
-
-export default MjAllResultsList;

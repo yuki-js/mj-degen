@@ -1,8 +1,8 @@
 import React from "react";
-import { useQueryParam } from "../hooks/useQueryParam";
-import BaseSearchInput from "./common/BaseSearchInput";
+import { useQueryParam } from "../../hooks/useQueryParam";
+import { BaseSearchInput } from "../common/BaseSearchInput";
 
-const SearchBar: React.FC = () => {
+export const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useQueryParam("q");
 
   const handleSearch = (query: string | null) => {
@@ -17,5 +17,3 @@ const SearchBar: React.FC = () => {
     />
   );
 };
-
-export default SearchBar;

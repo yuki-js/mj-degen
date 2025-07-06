@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   return (
     <header className="App-header">
       <h1>MJ漢字 検索</h1>
@@ -19,5 +19,3 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
-export default Header;

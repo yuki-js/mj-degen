@@ -1,12 +1,12 @@
 import React from "react";
-import MjGlyphImage from "../components/MjGlyphImage";
+import { MjGlyphImage } from "../components/rare/MjGlyphImage";
 import { useShrinkMap } from "../hooks/useShrinkMap";
 import { findRareKanji } from "../utils/rareKanjiUtils";
 import { SearchResult } from "../types";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryParam } from "../hooks/useQueryParam";
-import DetailsPanel from "../components/DetailsPanel";
-import Pagination from "../components/Pagination";
+import { DetailsPanel } from "../components/common/DetailsPanel";
+import { Pagination } from "../components/common/Pagination";
 
 const ITEMS_PER_PAGE = 100;
 

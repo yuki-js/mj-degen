@@ -1,6 +1,6 @@
-import SearchBar from "../components/SearchBar";
-import ResultsList from "../components/ResultsList";
-import DetailsPanel from "../components/DetailsPanel";
+import { SearchBar } from "../components/degen/SearchBar";
+import { ResultsList } from "../components/degen/ResultsList";
+import { DetailsPanel } from "../components/common/DetailsPanel";
 import "../App.css";
 import { useQueryParam } from "../hooks/useQueryParam";
 import { createFileRoute } from "@tanstack/react-router";

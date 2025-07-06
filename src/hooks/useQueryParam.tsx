@@ -1,4 +1,4 @@
-import { useSearch, useNavigate, type Search } from "@tanstack/react-router";
+import { useSearch, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
 /**

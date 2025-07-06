@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
   return (
     <footer
       style={{
@@ -45,5 +45,3 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;

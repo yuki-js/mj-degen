@@ -5,7 +5,10 @@ interface InfoSectionProps {
   children: React.ReactNode;
 }
 
-const InfoSection: React.FC<InfoSectionProps> = ({ title, children }) => {
+export const InfoSection: React.FC<InfoSectionProps> = ({
+  title,
+  children,
+}) => {
   if (!children) {
     return null;
   }
@@ -17,5 +20,3 @@ const InfoSection: React.FC<InfoSectionProps> = ({ title, children }) => {
     </div>
   );
 };
-
-export default InfoSection;

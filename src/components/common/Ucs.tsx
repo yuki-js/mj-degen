@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useQueryParam } from "../hooks/useQueryParam";
+import { useQueryParam } from "../../hooks/useQueryParam";
 
-interface JisxProps {
+interface UcsProps {
   value: string;
 }
 
-const Jisx: React.FC<JisxProps> = ({ value }) => {
+export const Ucs: React.FC<UcsProps> = ({ value }) => {
   const [showGlyph, setShowGlyph] = useState(false);
   const [, setSelectedIndex] = useQueryParam("idx");
   const [, setSearchQuery] = useQueryParam("q");
@@ -30,5 +30,3 @@ const Jisx: React.FC<JisxProps> = ({ value }) => {
     </span>
   );
 };
-
-export default Jisx;

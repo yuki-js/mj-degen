@@ -1,11 +1,11 @@
 import React, { useMemo, useEffect, useState } from "react";
-import { SearchResult } from "../types";
-import { useQueryParam } from "../hooks/useQueryParam";
-import { useShrinkMap } from "../hooks/useShrinkMap";
-import { performSearch } from "../utils/searchUtils";
+import { SearchResult } from "../../types";
+import { useQueryParam } from "../../hooks/useQueryParam";
+import { useShrinkMap } from "../../hooks/useShrinkMap";
+import { performSearch } from "../../utils/searchUtils";
 
-import MjGlyphImage from "./MjGlyphImage";
-const ResultsList: React.FC = () => {
+import { MjGlyphImage } from "../rare/MjGlyphImage";
+export const ResultsList: React.FC = () => {
   const [searchTerm] = useQueryParam("q");
   const [selectedIndex, setSelectedIndex] = useQueryParam("idx");
 
@@ -80,5 +80,3 @@ const ResultsList: React.FC = () => {
     </div>
   );
 };
-
-export default ResultsList;

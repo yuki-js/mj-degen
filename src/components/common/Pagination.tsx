@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import React, { useRef } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 
 interface PaginationProps {
   currentPage: number;
@@ -7,7 +7,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
   totalPages,
   onPageChange,
@@ -44,17 +44,25 @@ const Pagination: React.FC<PaginationProps> = ({
       dragElastic={0.2} // ドラッグの弾性
       onDragEnd={handleDragEnd} // ドラッグ終了時のイベントハンドラ
     >
-      <button onClick={() => onPageChange(currentPage - 1)} disabled={currentPage <= 1}>
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage <= 1}
+      >
         前へ
       </button>
       <div className="page-display">
-        ページ <motion.span>{Math.round(currentPage + visualPageOffset.get())}</motion.span> / {totalPages}
+        ページ{" "}
+        <motion.span>
+          {Math.round(currentPage + visualPageOffset.get())}
+        </motion.span>{" "}
+        / {totalPages}
       </div>
-      <button onClick={() => onPageChange(currentPage + 1)} disabled={currentPage >= totalPages}>
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage >= totalPages}
+      >
         次へ
       </button>
     </motion.div>
   );
 };
-
-export default Pagination;
