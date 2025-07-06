@@ -1,4 +1,6 @@
 import React from "react";
+import { useMjGlyphIVSMap } from "../hooks/useMjGlyphIVSMap";
+import { mjGlyphNameToIVS } from "../utils/mjGlyphNameToIVS";
 
 type MjGlyphImageProps = {
   mjId: string;
@@ -18,15 +20,21 @@ export const MjGlyphImage: React.FC<MjGlyphImageProps> = ({
   alt,
   className = "",
 }) => {
-  const imgClass = [sizeClass[size], className].filter(Boolean).join(" ");
+  const ivsMap = useMjGlyphIVSMap();
+  const glyph = mjGlyphNameToIVS(mjId, ivsMap);
+
+  const spanClass = [sizeClass[size], className].filter(Boolean).join(" ");
+
+  // Fallback: if glyph not found, show alt or mjId
   return (
-    <img
-      src={`https://moji.or.jp/mojikibansearch/img/MJ/${mjId}.png`}
-      alt={alt ?? mjId}
-      className={imgClass}
-      loading="lazy"
-      draggable={false}
-    />
+    <span
+      className={spanClass}
+      style={{}}
+      title={alt ?? mjId}
+      aria-label={alt ?? mjId}
+    >
+      {glyph ?? alt ?? mjId}
+    </span>
   );
 };
 

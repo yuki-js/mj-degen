@@ -274,11 +274,17 @@ body {
 }
 
 .glyph-image {
-  width: 40px;
-  height: 40px;
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 4px;
+  padding: 0.3rem;
+  display: grid;
+  place-items: center;
+  font-family: "IPAMJMincho", "ipamjm", serif;
+  font-size: 3em;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
 /* Details Panel */
@@ -310,13 +316,19 @@ body {
 }
 
 .glyph-image-large {
-  width: 100px;
-  height: 100px;
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-family: "IPAMJMincho", "ipamjm", serif;
+  font-size: 5em;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
   float: right;
   margin: 0 0 1rem 1rem;
+  padding: 1rem;
 }
 
 .details-panel p {
