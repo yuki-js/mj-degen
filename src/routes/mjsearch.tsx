@@ -4,9 +4,9 @@ import { useMjAllData } from "../hooks/useMjAllData";
 import { MjAllSearchParams, searchMjAllData } from "../utils/mjAllSearchUtils";
 import { MjAllSearchResult } from "../types/MjAllData";
 import MjAllSearchBar from "../components/MjAllSearchBar";
-import MjAllAdvancedFilters from "../components/MjAllAdvancedFilters";
 import MjAllResultsList from "../components/MjAllResultsList";
-import DetailsPanel from "../components/DetailsPanel";
+import MjAllDetailsPanel from "../components/MjAllDetailsPanel";
+import { useQueryParam } from "../hooks/useQueryParam";
 import "../styles/MjAllSearch.css";
 
 // Number of results per page
@@ -36,12 +36,10 @@ const MjAllSearchPage: React.FC = () => {
   // State for search params and pagination
   const [searchParams, setSearchParams] =
     useState<MjAllSearchParams>(initialParams);
-  const [selectedId, setSelectedId] = useState<string | null>(
-    search.idx as string | null
-  );
-  const [page, setPage] = useState<number>(
-    search.page ? parseInt(search.page as string, 10) : 1
-  );
+  const [selectedId, setSelectedId] = useQueryParam("idx");
+  const [pageStr, setPageStr] = useQueryParam("page");
+
+  const page = pageStr ? parseInt(pageStr, 10) : 1;
 
   // Perform search
   const searchResults = useMemo(() => {
@@ -61,7 +59,7 @@ const MjAllSearchPage: React.FC = () => {
   // Handlers
   const handleSearch = (params: MjAllSearchParams) => {
     setSearchParams(params);
-    setPage(1); // Reset to first page on new search
+    setPageStr("1"); // Reset to first page on new search
   };
 
   const handleSelectResult = (result: MjAllSearchResult) => {
@@ -70,30 +68,29 @@ const MjAllSearchPage: React.FC = () => {
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
-      setPage(newPage);
+      setPageStr(String(newPage));
     }
   };
 
   return (
     <>
-      <MjAllSearchBar initialParams={searchParams} onSearch={handleSearch} />
+      <MjAllSearchBar
+        data={mjAllData}
+        initialParams={searchParams}
+        onSearch={handleSearch}
+      />
       <main className="main-content">
         <div className="search-content">
-          <MjAllAdvancedFilters
-            data={mjAllData}
-            params={searchParams}
-            onFilterChange={handleSearch}
-          />
           <MjAllResultsList
             results={currentPageResults}
-            selectedId={selectedId}
+            selectedId={selectedId || null}
             onSelectResult={handleSelectResult}
             currentPage={page}
             totalPages={totalPages}
             onPageChange={handlePageChange}
           />
         </div>
-        {selectedId && <DetailsPanel />}
+        {selectedId && <MjAllDetailsPanel />}
       </main>
     </>
   );

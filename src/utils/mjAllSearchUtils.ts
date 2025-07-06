@@ -4,6 +4,7 @@
 
 import { MjAllDataRow, MjAllSearchResult } from "../types/MjAllData";
 import { mjRowToSearchResult } from "./mjGlyphMapping";
+import { processSqlLikeQuery } from "./sqlLikeParser";
 
 /**
  * Search parameters for the MJ_all.csv data
@@ -27,22 +28,45 @@ export function searchMjAllData(
   data: MjAllDataRow[],
   params: MjAllSearchParams
 ): MjAllSearchResult[] {
-  // Filter the data based on the search parameters
+  // Check if the query is a SQL-like query
+  if (params.query && params.query.trim().toUpperCase().startsWith("SELECT")) {
+    const sqlResults = processSqlLikeQuery(data, params.query);
+    if (sqlResults) {
+      return sqlResults.map(mjRowToSearchResult);
+    }
+  }
+
+  // If not a SQL query or SQL query failed, use standard filtering
   const filtered = data.filter((row) => {
     // Free text search across multiple fields
     if (params.query) {
-      const query = params.query.toLowerCase();
+      const query = params.query;
+
+      // Special case for single kanji character search
+      // Handle single kanji (including surrogate pairs) and optional IVS
+      const chars = Array.from(params.query!);
+      if (chars.length >= 1 && /\p{Script=Han}/u.test(chars[0])) {
+        // Base code point (handles surrogate pairs)
+        const baseCp = chars[0].codePointAt(0)!;
+        const ucsCodePoint = `U+${baseCp.toString(16).toUpperCase()}`;
+
+        // No IVS: match only UCS
+        return row.実装したUCS === ucsCodePoint;
+      }
+
+      // For other searches, use case-insensitive includes
+      const queryLower = query.toLowerCase();
       const searchableFields = [
-        row.図形,
         row.MJ文字図形名,
         row.対応するUCS,
         row.実装したUCS,
+        row.実装したMoji_JohoコレクションIVS,
         row["読み(参考)"],
       ];
 
       if (
         !searchableFields.some(
-          (field) => field && field.toLowerCase().includes(query)
+          (field) => field && field.toLowerCase().includes(queryLower)
         )
       ) {
         return false;

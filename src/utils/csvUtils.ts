@@ -33,7 +33,7 @@ export function parseCSVLine(line: string): string[] {
 /**
  * Parse a CSV string into an array of objects with named fields
  */
-export function parseCSV<T>(csvText: string): T[] {
+export function parseCSV<T extends Record<string, string>>(csvText: string): T[] {
   const lines = csvText.split(/\r?\n/).filter(Boolean);
   if (lines.length < 2) throw new Error("CSV missing data");
 
@@ -46,7 +46,7 @@ export function parseCSV<T>(csvText: string): T[] {
 
     const obj = {} as T;
     for (let j = 0; j < header.length; j++) {
-      (obj as any)[header[j]] = row[j];
+      (obj as Record<string, string>)[header[j]] = row[j];
     }
     results.push(obj);
   }

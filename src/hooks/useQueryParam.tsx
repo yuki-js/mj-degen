@@ -1,4 +1,4 @@
-import { useSearch, useNavigate } from "@tanstack/react-router";
+import { useSearch, useNavigate, type Search } from "@tanstack/react-router";
 import { useCallback } from "react";
 
 /**
@@ -28,7 +28,7 @@ export const useQueryParam = (
         newSearch[key] = value;
       }
       navigate({
-        search: newSearch as any, // Accept dynamic keys
+        search: newSearch, // Accept dynamic keys
         replace: options?.replace ?? false,
       });
     },

@@ -66,7 +66,7 @@ const MjAllResultsList: React.FC<MjAllResultsListProps> = ({
   return (
     <div className="results-container">
       <div className="results-header">
-        <h3>検索結果: {results.length}件</h3>
+        <h3>検索結果</h3>
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
