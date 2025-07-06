@@ -1,0 +1,152 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"definitions": {
+		"MJ文字図形名": {
+			"description": "MJ文字情報一覧表内で一意に定めた文字図形の名称",
+			"type": "string",
+			"pattern": "^MJ[0-9]{6}$"
+		},
+		"JISX0213面区点位置": {
+			"description": "JIS X 0213:2012の面区点コードを記した。",
+			"type": "string",
+			"pattern": "^[1-2]-[0-9]{2}-[0-9]{2}$"
+		},
+		"UCS符号位置": {
+			"description": "UCS符号位置は、「U+」に続けてISO/IEC 10646:2014の16進とした。",
+			"type": "string",
+			"pattern": "^U\\+[0-9A-F]{4,5}$"
+		},
+		"JIS面区点位置とUCS符号位置の組": {
+			"description": "JIS X 0213:2012の面区点コードとUCS符号位置の組情報を記した。UCS符号位置は、JIS X 0213:2012の面区点コードに対するUCS符号位置を記した。",
+			"type": "object",
+			"properties": {
+				"JIS X 0213": {"$ref": "#/definitions/JISX0213面区点位置"},
+				"UCS": {"$ref": "#/definitions/UCS符号位置"}
+			},
+			"required": ["JIS X 0213", "UCS"]
+		},
+		"縮退候補情報": {
+			"type": "object",
+			"properties": {
+				"MJ文字図形名": {"$ref": "#/definitions/MJ文字図形名"},
+				"JIS包摂基準・UCS統合規則": {
+					"description": "図形的な類似性を調べ、JIS X 0213に定義された「包摂規準」、および、UCS（ISO/IEC 10646）に定義された統合規則(Unification Rules)に照らして、JIS文字集合に属する文字に包摂／統合されると判断されるもの。",
+					"type": "array",
+					"items": {"$ref": "#/definitions/JIS面区点位置とUCS符号位置の組"}
+				},
+				"法務省戸籍法関連通達・通知": {
+					"description": "戸籍法及び戸籍法施行規則に係る通達・通知の情報[戸籍統一文字情報 親字・正字, 民一2842号通達別表 誤字俗字・正字一覧表, 民二5202号通知別表 正字・俗字等対照表]により、関連する縮退候補",
+					"type": "array",
+					"items": {
+						"allOf": [
+							{"$ref": "#/definitions/JIS面区点位置とUCS符号位置の組"},
+							{"properties": {
+								"種別": {
+								"enum": [
+									"民二5202号通知別表 正字・俗字等対照表",
+									"戸籍統一文字情報 親字・正字",
+									"民一2842号通達別表 誤字俗字・正字一覧表"
+								]
+							},
+							"付記": {
+								"type": "string"
+							},
+							"ホップ数": {
+								"type": "integer",
+								"minimum": 1
+							}
+						}, "required": ["種別"] }
+					]
+					}
+				},
+				"法務省告示582号別表第四": {
+					"description": "法務省の「在留カード等に係る漢字氏名の表記等に関する告示（平成２３年法務省告示第５８２号）」の別表第四により、JIS文字集合に属する文字へ結びつけられると判断されるもの。",
+					"type": "array",
+					"items": {
+						"allOf": [
+							{"$ref": "#/definitions/JIS面区点位置とUCS符号位置の組"},
+							{"properties": {
+								"表": {
+									"enum": ["一", "二"]
+								},
+								"順位": {
+									"enum": ["第1順位", "第2順位"]
+								}
+							}, "required": ["表","順位"] }
+						],"maxItems": 2
+					}
+				},
+				"辞書類等による関連字": {
+					"description": "辞書類[大漢和辞典、日本語漢字辞典、新大字典、大字源、大漢語林]に示された異体字等の関係性から、JIS文字集合に属する文字へ結びつけられると判断されるもの。",
+					"type": "array",
+					"items": {"$ref": "#/definitions/JIS面区点位置とUCS符号位置の組"}
+				},
+				"読み・字形による類推": {
+					"description": "読み、字形などから、JIS文字集合へ属する文字へ結びつけられると判断されるもの。",
+					"type": "array",
+					"items": {"$ref": "#/definitions/JIS面区点位置とUCS符号位置の組"}
+				},
+				"参考情報": {
+					"description": "国字や地名外字とされるものについては、参考情報を記した。",
+					"type": "string"
+				}
+			},"required": ["MJ文字図形名"]
+		}
+	},
+
+	"title": "MJ縮退マップスキーマVer.1.0.0",
+	"type": "object",
+	"properties": {
+		"meta": {
+			"description": "縮退マップのライセンスやバージョン情報を記すメタ情報",
+			"type": "object",
+			"properties": {
+				"dct:title": {
+					"description": "縮退マップのリソース名",
+					"type": "string"
+				},
+				"dct:issued": {
+					"description": "縮退マップの公開日時",
+					"type": "string",
+					"format": "date"
+				},
+				"dct:creator": {
+					"description": "縮退マップの著作者",
+					"type": "array",
+					"minItems": 1
+				},
+				"cc:license": {
+					"description": "縮退マップに適用されるライセンスのURL",
+					"type": "string",
+					"format": "uri"
+				},
+				"owl:versionInfo": {
+					"description": "縮退マップのバージョン番号",
+					"type": "string",
+					"pattern": "\\d+\\.\\d+(\\.\\d+)+"
+				},
+				"MJ文字情報一覧表": {
+					"description": "MJ縮退マップを作成するにあたり使用したMJ文字情報一覧表",
+					"type": "string",
+					"pattern": "Ver\\.\\d{3}\\.\\d{2}"
+				},
+				"releaseNotes": {
+					"description": "縮退マップリリースに関する情報の履歴一覧",
+					"type": "array",
+					"items": {
+						"owl:versionInfo": {"$ref": "#/properties/meta/properties/owl:versionInfo"},
+						"dct:issued": {"$ref": "#/properties/meta/properties/dct:issued"},
+						"info": {
+							"description": "リリースに関する情報",
+							"type": "string"
+						}
+					}
+				}
+			}, "required": ["dct:title", "dct:creator", "cc:license"]
+		},
+		"content": {
+			"type": "array",
+			"items": {"$ref": "#/definitions/縮退候補情報"}
+		}
+	}, "required": ["meta", "content"]
+}
