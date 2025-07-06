@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RareRouteImport } from './routes/rare'
+import { Route as MjsearchRouteImport } from './routes/mjsearch'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RareRoute = RareRouteImport.update({
   id: '/rare',
   path: '/rare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MjsearchRoute = MjsearchRouteImport.update({
+  id: '/mjsearch',
+  path: '/mjsearch',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/mjsearch': typeof MjsearchRoute
   '/rare': typeof RareRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/mjsearch': typeof MjsearchRoute
   '/rare': typeof RareRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/mjsearch': typeof MjsearchRoute
   '/rare': typeof RareRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/rare'
+  fullPaths: '/' | '/mjsearch' | '/rare'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/rare'
-  id: '__root__' | '/' | '/rare'
+  to: '/' | '/mjsearch' | '/rare'
+  id: '__root__' | '/' | '/mjsearch' | '/rare'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MjsearchRoute: typeof MjsearchRoute
   RareRoute: typeof RareRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/rare'
       fullPath: '/rare'
       preLoaderRoute: typeof RareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mjsearch': {
+      id: '/mjsearch'
+      path: '/mjsearch'
+      fullPath: '/mjsearch'
+      preLoaderRoute: typeof MjsearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MjsearchRoute: MjsearchRoute,
   RareRoute: RareRoute,
 }
 export const routeTree = rootRouteImport
